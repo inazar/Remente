@@ -36,6 +36,7 @@
     <preference name="phonegap-version" value="3.4.0" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
+    <preference name="permissions" value="none" />
     <icon src="icon.png" />
 
     <!-- iOS -->
