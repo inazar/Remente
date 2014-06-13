@@ -120,9 +120,9 @@
     <gap:splash src="resources/android/drawable-land-xhdpi/screen.png" gap:platform="android" gap:qualifier="land-xhdpi" />
 
     <!-- Cordova plugins -->
-    <gap:plugin name="com.phonegap.plugins.device"/>
-    <gap:plugin name="com.phonegap.plugins.splashscreen"/>
-    <gap:plugin name="com.phonegap.plugins.console"/>
+    <gap:plugin name="org.apache.cordova.device"/>
+    <gap:plugin name="org.apache.cordova.splashscreen"/>
+    <gap:plugin name="org.apache.cordova.console"/>
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
     <gap:plugin name="com.ionic.keyboard" version="0.0.1" />
     <gap:plugin name="com.plugin.datepicker" version="0.3.2" />
