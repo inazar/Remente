@@ -124,6 +124,6 @@
     <gap:plugin name="org.apache.cordova.splashscreen"/>
     <gap:plugin name="org.apache.cordova.console"/>
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
-    <gap:plugin name="com.ionic.keyboard" version="0.0.1" />
-    <gap:plugin name="com.plugin.datepicker" version="0.3.2" />
+    <gap:plugin name="com.ionic.keyboard" version="~0.0.1" />
+    <gap:plugin name="com.plugin.datepicker" version="~0.3.2" />
 </widget>
