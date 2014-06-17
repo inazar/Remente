@@ -101,7 +101,8 @@
     <preference name="android-minSdkVersion" value="10" />
     <preference name="android-targetSdkVersion" value="19" />
     <preference name="android-installLocation" value="auto" />
-    <preference name="splash-screen-duration" value="5000"/>
+    <preference name="splashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="4000" />
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 
     <!-- Icons -->
@@ -111,14 +112,19 @@
     <icon src="resources/android/drawable-xhdpi/icon.png" gap:platform="android" gap:qualifier="xhdpi" />
     <icon src="resources/android/drawable-xxhdpi/icon.png" gap:platform="android" gap:qualifier="xxhdpi" />
 
-    <gap:splash src="resources/android/drawable-port-ldpi/screen.png" gap:platform="android" gap:qualifier="port-ldpi" />
+    <gap:splash src="resources/android/drawable-ldpi/screen.9.png" gap:platform="android" gap:qualifier="ldpi" />
+    <gap:splash src="resources/android/drawable-mdpi/screen.9.png" gap:platform="android" gap:qualifier="mdpi" />
+    <gap:splash src="resources/android/drawable-hdpi/screen.9.png" gap:platform="android" gap:qualifier="hdpi" />
+    <gap:splash src="resources/android/drawable-xhdpi/screen.9.png" gap:platform="android" gap:qualifier="xhdpi" />
+
+    <!--gap:splash src="resources/android/drawable-port-ldpi/screen.png" gap:platform="android" gap:qualifier="port-ldpi" />
     <gap:splash src="resources/android/drawable-port-mdpi/screen.png" gap:platform="android" gap:qualifier="port-mdpi" />
     <gap:splash src="resources/android/drawable-port-hdpi/screen.png" gap:platform="android" gap:qualifier="port-hdpi" />
     <gap:splash src="resources/android/drawable-port-xhdpi/screen.png" gap:platform="android" gap:qualifier="port-xhdpi" />
     <gap:splash src="resources/android/drawable-land-ldpi/screen.png" gap:platform="android" gap:qualifier="land-ldpi" />
     <gap:splash src="resources/android/drawable-land-mdpi/screen.png" gap:platform="android" gap:qualifier="land-mdpi" />
     <gap:splash src="resources/android/drawable-land-hdpi/screen.png" gap:platform="android" gap:qualifier="land-hdpi" />
-    <gap:splash src="resources/android/drawable-land-xhdpi/screen.png" gap:platform="android" gap:qualifier="land-xhdpi" />
+    <gap:splash src="resources/android/drawable-land-xhdpi/screen.png" gap:platform="android" gap:qualifier="land-xhdpi" /-->
 
     <!-- Cordova plugins -->
     <gap:plugin name="org.apache.cordova.device"/>

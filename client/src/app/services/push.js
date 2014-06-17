@@ -58,12 +58,12 @@ angular.module('Remente').service('PushSvc', [
                         break;
                       case 'message':
                         if (e.foreground) {
-                          return console.log("message: " + e.alert);
+                          return console.log("message: " + e.message);
                         } else {
                           if (e.coldstart) {
-                            return console.log("start on: " + e.alert);
+                            return console.log("start on: " + e.message);
                           } else {
-                            return console.log("background: " + e.alert);
+                            return console.log("background: " + e.message);
                           }
                         }
                         break;

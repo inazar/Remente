@@ -338,7 +338,7 @@ angular.module('Remente').config([
                       $scope.input.$repeat = false;
                     }
                   } else {
-                    $scope.$repeat = false;
+                    $scope.input.$repeat = false;
                   }
                   if ($scope.$repeat) {
                     if (typeof analytics !== "undefined" && analytics !== null) {

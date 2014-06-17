@@ -313,10 +313,10 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
         $state.go.apply($state, arguments);
         return $ionicSideMenuDelegate.toggleRight(false);
       },
-      showLoading: function() {
+      showLoading: function(delay) {
         return $ionicLoading.show({
           template: '<i class="icon icon-large ion-loading-c"></i>',
-          delay: 50
+          delay: delay || 50
         });
       },
       hideLoading: function() {
@@ -492,14 +492,12 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
       });
       return config;
     });
+    $scope.dateInputType = 'date';
     CordovaSvc.then(function(device) {
+      $scope.dateInputType = !cordova || device.platform === 'iOS' ? 'date' : 'text';
       if (device.platform !== 'iOS' && cordova && $window.datePicker) {
-        $scope.dateInputType = !cordova || device.platform === 'iOS' ? 'date' : 'text';
         return $scope.datePicker = function(e, obj, field, minDate, maxDate) {
-          var options, _ref;
-          if ((_ref = cordova.plugins.Keyboard) != null) {
-            _ref.close();
-          }
+          var options;
           options = {
             date: obj[field] ? new Date(obj[field]) : new Date(),
             mode: 'date'
@@ -511,9 +509,13 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
             options[maxDate] = maxDate;
           }
           datePicker.show(options, function(date) {
-            e.target.blur();
             return $timeout(function() {
-              return obj[field] = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0];
+              e.target.blur();
+              if (!date || isNaN(date.getTime())) {
+                return;
+              }
+              obj[field] = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0];
+              return $scope.$apply();
             });
           });
           return device;

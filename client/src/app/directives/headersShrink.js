@@ -74,8 +74,9 @@ angular.module('Remente').directive('headersShrink', [
     };
     return {
       restrict: 'A',
+      priority: 1000,
       link: function($scope, $element, $attr) {
-        var $content, $delegate, $view, content, header1, header1Height, header2, header2Height, headerHeight, starty;
+        var $content, content, header1, header1Height, header2, header2Height, headerHeight, starty;
         header1 = angular.element($element[0].querySelector('.bar-header'));
         header2 = angular.element($element[0].querySelector('.bar-subheader'));
         content = $element.find('ion-content');
@@ -97,18 +98,19 @@ angular.module('Remente').directive('headersShrink', [
         });
         starty = $scope.$eval($attr.headerShrink) || 0;
         if ($attr.scrollDelegate) {
-          $delegate = $ionicScrollDelegate.$getByHandle($attr.scrollDelegate);
-          $view = {};
           $timeout(function() {
-            return $view = $delegate.getScrollView();
-          });
-          $content.$_scrollComplete = function() {
-            if ($view.__maxScrollTop <= $view.__scrollTop) {
-              return shrink(header1, header2, 0, headerHeight, content, true);
-            }
-          };
-          $scope.$on('$destroy', function() {
-            return $content.$_scrollComplete = null;
+            var $delegate, $view;
+            $delegate = $ionicScrollDelegate.$getByHandle($attr.scrollDelegate);
+            $view = {};
+            $view = $delegate.getScrollView();
+            $content.$_scrollComplete = function() {
+              if ($view.__maxScrollTop <= $view.__scrollTop) {
+                return shrink(header1, header2, 0, headerHeight, content, true);
+              }
+            };
+            return $scope.$on('$destroy', function() {
+              return $content.$_scrollComplete = null;
+            });
           });
         }
         $ionicGesture.on('dragup', function(e) {
