@@ -371,7 +371,12 @@ angular.module('Remente').factory('ResourcesSvc', [
           method: 'DELETE'
         }
       });
-      resources.lessons.icons = $resource("" + routes.api + "/lessons/:cid/icons.json", {}, {
+      resources.lessons.icons = $resource("" + routes.api + "/lessons/:lid/icons.json", {}, {
+        'create': {
+          method: 'POST'
+        }
+      });
+      resources.lessons.images = $resource("" + routes.api + "/lessons/:lid/images.json", {}, {
         'create': {
           method: 'POST'
         }

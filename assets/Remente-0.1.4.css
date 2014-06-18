@@ -8280,22 +8280,24 @@ h1, h2, h3, h4, h5, h6,
 .icon-large {
   font-size: 36px; }
 
-.bar.bar-subheader .button-bar.buttons {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -moz-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  justify-content: flex-start;
-  width: auto; }
-.bar.bar-subheader .button-bar > .button {
-  -webkit-box-flex: 0 1 auto;
-  -webkit-flex: 0 1 auto;
-  -moz-box-flex: 0 1 auto;
-  -moz-flex: 0 1 auto;
-  -ms-flex: 0 1 auto;
-  flex: 0 1 auto;
-  width: auto; }
+.bar.bar-subheader .button-bar, .button-bar.button-bar-inline {
+  display: inline-block; }
+  .bar.bar-subheader .button-bar.buttons, .button-bar.button-bar-inline.buttons {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    justify-content: flex-start;
+    width: auto; }
+  .bar.bar-subheader .button-bar > .button, .button-bar.button-bar-inline > .button {
+    -webkit-box-flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
+    -moz-box-flex: 0 1 auto;
+    -moz-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: auto; }
 
 .button-bar > .button {
   -moz-box-sizing: border-box;
@@ -11780,6 +11782,27 @@ html:hover [class^="ss-"] {
 .goal-progress {
   margin-left: 20px;
 }
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+.collapse {
+  display: none;
+}
+.collapse.in {
+  display: block;
+}
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
 .logo-mask {
   height: 40px;
   text-align: center;
@@ -13407,6 +13430,10 @@ img.remente-content ::selection {
 .ta-editor h6,
 .remente-content h6 {
   color: #16a085;
+}
+.ta-editor button i,
+.remente-content button i {
+  font-style: normal;
 }
 .item-input input.settings-input {
   padding-right: 32px;

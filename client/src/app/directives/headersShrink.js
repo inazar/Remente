@@ -82,8 +82,6 @@ angular.module('Remente').directive('headersShrink', [
         content = $element.find('ion-content');
         $content = content.scope();
         if ($content.app.edit) {
-          header2.addClass('ng-hide');
-          content.removeClass('has-subheader');
           return;
         }
         header1[0].style[transform] = 'translate3d(0, 0, 0)';

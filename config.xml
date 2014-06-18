@@ -102,8 +102,8 @@
     <preference name="android-targetSdkVersion" value="19" />
     <preference name="android-installLocation" value="auto" />
     <preference name="splashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="4000" />
-    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+    <preference name="SplashScreenDelay" value="10000" />
+    <!--preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" /-->
 
     <!-- Icons -->
     <icon src="resources/android/drawable-ldpi/icon.png" gap:platform="android" gap:qualifier="ldpi" />
@@ -131,6 +131,6 @@
     <gap:plugin name="org.apache.cordova.splashscreen"/>
     <gap:plugin name="org.apache.cordova.console"/>
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
-    <gap:plugin name="com.ionic.keyboard" version="0.0.1" />
+    <!-- gap:plugin name="com.ionic.keyboard" version="0.0.1" /-->
     <gap:plugin name="com.plugin.datepicker" version="0.3.2" />
 </widget>

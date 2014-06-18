@@ -322,6 +322,30 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
       hideLoading: function() {
         return $ionicLoading.hide();
       },
+      uploadMedia: function(type, data, callback) {
+        return ResourcesSvc.$promise.then(function($resources) {
+          return $resources["" + type + "s"].save({
+            id: 'new'
+          }, {
+            data: data
+          }).$promise.then(function(img) {
+            return callback(null, img._id);
+          }, function(err) {
+            return callback(err);
+          });
+        });
+      },
+      destroyMedia: function(type, id, callback) {
+        return ResourcesSvc.$promise.then(function($resources) {
+          return $resources["" + type + "s"].remove({
+            id: id
+          }).$promise.then(function() {
+            return callback();
+          }, function(err) {
+            return callback(err);
+          });
+        });
+      },
       settings: function() {
         $ionicModal.fromTemplateUrl('pages/settings.tpl', {
           scope: $scope.$new(),
@@ -498,6 +522,7 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
       if (device.platform !== 'iOS' && cordova && $window.datePicker) {
         return $scope.datePicker = function(e, obj, field, minDate, maxDate) {
           var options;
+          e.preventDefault();
           options = {
             date: obj[field] ? new Date(obj[field]) : new Date(),
             mode: 'date'
