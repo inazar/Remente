@@ -121,11 +121,11 @@ angular.module('Remente', ['ng', 'ionic', 'ngCookies', 'ngTouch', 'ngResource', 
 ]).config([
   '$compileProvider', function($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(file|https?|tel|mailto):/);
-    return $compileProvider.imgSrcSanitizationWhitelist(/.*\/img\/(icon|image)\/.+/);
+    return $compileProvider.imgSrcSanitizationWhitelist(/(.*\/img\/(icon|image)\/.+|https?:\/\/.+\.vimeocdn.com\/video\/.+\.jpe?g)/);
   }
 ]).config([
   '$sceDelegateProvider', function($sceDelegateProvider) {
-    return $sceDelegateProvider.resourceUrlWhitelist(['self', '**/img/icon/*', '**/img/image/*']);
+    return $sceDelegateProvider.resourceUrlWhitelist(['self', '**/img/icon/*', '**/img/image/*', 'http://player.vimeo.com/video/*', 'https://*.vimeocdn.com/video/*.jpeg']);
   }
 ]).config([
   '$urlRouterProvider', function($urlRouterProvider) {

@@ -13435,6 +13435,12 @@ img.remente-content ::selection {
 .remente-content button i {
   font-style: normal;
 }
+.ta-editor iframe,
+.remente-content iframe,
+.ta-editor img,
+.remente-content img {
+  width: 100%;
+}
 .item-input input.settings-input {
   padding-right: 32px;
 }

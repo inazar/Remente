@@ -63,7 +63,7 @@ textAngularSetup.constant('taTranslations', {
 });
 
 textAngularSetup.run([
-  'taRegisterTool', '$window', '$document', 'taTranslations', 'taSelection', 'taOptions', 'ImageUploadSvc', 'ResourcesSvc', '$timeout', '$rootScope', '$baseurl', '$ionicPopup', '$filter', 'gettext', function(taRegisterTool, $window, $document, taTranslations, taSelection, taOptions, ImageUploadSvc, ResourcesSvc, $timeout, $scope, $baseurl, $ionicPopup, $filter, gettext) {
+  'taRegisterTool', '$window', '$document', 'taTranslations', 'taSelection', 'taOptions', 'ImageUploadSvc', 'ResourcesSvc', '$timeout', '$rootScope', '$baseurl', '$ionicModal', '$filter', 'gettext', '$http', function(taRegisterTool, $window, $document, taTranslations, taSelection, taOptions, ImageUploadSvc, ResourcesSvc, $timeout, $scope, $baseurl, $ionicModal, $filter, gettext, $http) {
     var headerAction, imgOnSelectAction, _fileInput, _retActiveStateFunction;
     taRegisterTool("html", {
       buttontext: taTranslations.toggleHTML,
@@ -366,10 +366,10 @@ textAngularSetup.run([
             return ImageUploadSvc(e.target.files[0], {
               sizeX: 256
             }).then(function(data) {
-              if ($scope.upload) {
+              if ($scope.uploadMedia) {
                 return $scope.uploadMedia('image', data, function(err, id) {
                   if (id) {
-                    _this.$editor().wrapSelection('insertImage', "" + ($baseurl || location.origin) + "/img/image/" + id, true);
+                    _this.$editor().wrapSelection('insertImage', "" + $baseurl + "/img/image/" + id, true);
                   }
                   return defer.resolve();
                 });
@@ -457,17 +457,46 @@ textAngularSetup.run([
     });
     return taRegisterTool('insertVideo', {
       iconclass: 'fa fa-youtube-play',
-      action: function() {
-        var embed, ids, urlLink, urlPrompt;
-        urlPrompt = $window.prompt(taTranslations.insertVideo, 'http://');
-        if (urlPrompt && urlPrompt !== '' && urlPrompt !== 'http://') {
-          ids = urlPrompt.match(/(\?|&)v=[^&]*/);
-          if (ids.length > 0) {
-            urlLink = "http://www.youtube.com/embed/" + ids[0].substring(3);
-            embed = '<img class="ta-insert-video" ta-insert-video="' + urlLink + '" contenteditable="false" src="" allowfullscreen="true" width="300" frameborder="0" height="250"/>';
-            return this.$editor().wrapSelection('insertHTML', embed, true);
-          }
-        }
+      action: function(defer) {
+        var _this = this;
+        $http.get('videos').then(function(res) {
+          var scope;
+          scope = $scope.$new();
+          scope.data = {
+            list: res.data,
+            text: '',
+            selected: null
+          };
+          scope.select = function(video) {
+            scope.data.text = video.title;
+            return scope.data.selected = video;
+          };
+          scope.videoFilter = function(video) {
+            if (!scope.data.text) {
+              return true;
+            }
+            return new RegExp(scope.data.text, 'i').test(video.title);
+          };
+          return $ionicModal.fromTemplateUrl('directives/taSetup.tpl', {
+            scope: scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+            scope.$close = function(val) {
+              var embed, srcLink, urlLink, _ref;
+              if (val != null ? val.id : void 0) {
+                urlLink = "http://player.vimeo.com/video/" + val.id;
+                srcLink = ((_ref = val.thumb) != null ? _ref.link : void 0) || '';
+                embed = '<img class="ta-insert-video" ta-insert-video="' + urlLink + '" contenteditable="false" src="' + srcLink + '" frameborder="0" allowfullscreen/>';
+                _this.$editor().wrapSelection('insertHTML', embed, true);
+              }
+              return modal.remove().then(function() {
+                return defer.resolve();
+              });
+            };
+            return modal.show();
+          });
+        });
+        return false;
       },
       onElementSelect: {
         element: 'img',
@@ -475,5 +504,36 @@ textAngularSetup.run([
         action: imgOnSelectAction
       }
     });
+  }
+]);
+
+textAngularSetup.directive('taInsertVideo', [
+  function() {
+    return {
+      restrict: 'A',
+      replace: true,
+      scope: {
+        taInsertVideo: '@'
+      },
+      template: "<iframe width=\"{{width}}\" frameborder=\"{{frameborder}}\" title=\"{{title}}\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+      link: function($scope, $element, $attrs, $ctrl, $transclude) {
+        var src;
+        src = $element.attr('ta-insert-video');
+        $element.removeAttr('ta-insert-video');
+        return $element.attr('src', src);
+      }
+    };
+  }
+]);
+
+textAngularSetup.directive('taHtmlCompile', [
+  '$compile', function($compile) {
+    return {
+      restrict: 'A',
+      link: function($scope, $element, $attrs, $ctrl, $transclude) {
+        $element.html($scope.$eval($attrs.taHtmlCompile));
+        return $compile($element.contents())($scope);
+      }
+    };
   }
 ]);

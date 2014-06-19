@@ -5,7 +5,7 @@ angular.module('common').factory('$baseurl', [
     if ($window.location.protocol === 'file:') {
       return baseUrl;
     } else {
-      return '';
+      return location.origin;
     }
   }
 ]);
