@@ -72,8 +72,7 @@ angular.module('Remente').service('PushSvc', [
                     }
                   };
                   ConfigSvc.then(function(config) {
-                    pushNotification.register(function(a, b, c) {
-                      console.log(a, b, c);
+                    pushNotification.register(function() {
                       return d.resolve();
                     }, function(err) {
                       return d.reject(err);
@@ -109,11 +108,11 @@ angular.module('Remente').service('PushSvc', [
             if (pushNotification = (_ref2 = $window.plugins) != null ? _ref2.pushNotification : void 0) {
               pushNotification.unregister(function() {
                 _this.registered = false;
-                return $scope.$apply(function() {
+                return $timeout(function() {
                   return d.resolve();
                 });
               }, function(err) {
-                return $scope.$apply(function() {
+                return $timeout(function() {
                   return d.reject(err);
                 });
               });
