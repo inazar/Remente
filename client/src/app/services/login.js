@@ -6,7 +6,7 @@ angular.module('Remente').service('LoginSvc', [
     return angular.extend(this, {
       user: null,
       set: function(user, e) {
-        var d,
+        var d, dc,
           _this = this;
         d = $q.defer();
         if (user) {
@@ -44,15 +44,27 @@ angular.module('Remente').service('LoginSvc', [
             analytics.track(e);
           }
         } else {
-          PushSvc.unregister().then(function() {
-            return d.resolve(this.user = null);
-          }, function(err) {
-            exceptionLoggingService(err, 'push service unregister', 'warning');
-            return d.resolve(_this.user = null);
-          });
-          if (typeof analytics !== "undefined" && analytics !== null) {
-            analytics.track(e);
+          dc = $q.defer();
+          if ($window.cookies.clear) {
+            $window.cookies.clear(function() {
+              return dc.resolve();
+            }, function(err) {
+              exceptionLoggingService(err, 'cookies clear', 'warning');
+              return dc.resolve();
+            });
+          } else {
+            dc.resolve();
           }
+          dc.promise.then(function() {
+            var _this = this;
+            PushSvc.unregister().then(function() {
+              return d.resolve(this.user = null);
+            }, function(err) {
+              exceptionLoggingService(err, 'push service unregister', 'warning');
+              return d.resolve(_this.user = null);
+            });
+            return typeof analytics !== "undefined" && analytics !== null ? analytics.track(e) : void 0;
+          });
         }
         return d.promise;
       },
