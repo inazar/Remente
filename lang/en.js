@@ -97,4 +97,4 @@ $provide.value("$locale", {
   "pluralCat": function (n) {  if (n == 1) {   return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
 });
 }]);
-angular.module("locale_en", [], ["$provide", function($provide) {$provide.constant("en", {"en":"English","sv-se":"Svenska (special)","sv":"Svenska"});}]);
+angular.module("locale_en", [], ["$provide", function($provide) {$provide.constant("en", {"en":"English","sv-ax":"Svenska (special)","sv":"Svenska"});}]);
